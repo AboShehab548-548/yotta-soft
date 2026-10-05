@@ -1,4 +1,4 @@
-# yotta soft — OnyxPro-aligned ERP
+# yotta soft ERP
 
 نظام محاسبي وERP مكتبي مبني بـ **WPF** و **.NET Framework 4.7.2** و **SQL Server**، مع الحفاظ على الواجهات الحالية وإعادة تنظيم طبقة البيانات والخدمات لتقترب من دورة نظام الأونكس برو 7/8.
 
