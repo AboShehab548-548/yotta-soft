@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+packages/
+*.user
+*.suo
+*.ncb
+*.pdb
+*.cache
+App.local.config
+*.bak

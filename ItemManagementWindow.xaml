@@ -1,0 +1,135 @@
+﻿<Window x:Class="AccountingSystem.UI.ItemManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="إدارة وتكويد الأصناف" Height="750" Width="950"
+        WindowStartupLocation="CenterScreen" Background="#181825"
+        FlowDirection="RightToLeft">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <!-- 0. Header -->
+            <RowDefinition Height="Auto"/>
+            <!-- 1. Form Fields -->
+            <RowDefinition Height="60"/>
+            <!-- 2. Action Buttons -->
+            <RowDefinition Height="*"/>
+            <!-- 3. Search & DataGrid -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. العنوان -->
+        <Border Grid.Row="0" Background="#1E1E2E" CornerRadius="8" Padding="15,0" Margin="0,0,0,10">
+            <DockPanel VerticalAlignment="Center">
+                <TextBlock Text="📦 إدارة وتكويد الأصناف والمخزون" Foreground="#CDD6F4" FontSize="18" FontWeight="Bold"/>
+            </DockPanel>
+        </Border>
+
+        <!-- 2. حقول إدخال البيانات -->
+        <Border Grid.Row="1" Background="#1E1E2E" CornerRadius="8" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- الباركود -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="رقم الباركود:" Foreground="#CDD6F4" FontSize="15" VerticalAlignment="Center" Margin="0,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtBarcode" Background="#313244" Foreground="#A6E3A1" 
+                         FontSize="15" Padding="6" Margin="0,5" BorderThickness="1" BorderBrush="#89B4FA" KeyDown="txtBarcode_KeyDown"/>
+
+                <!-- اسم الصنف -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="اسم الصنف:" Foreground="#CDD6F4" FontSize="15" VerticalAlignment="Center" Margin="0,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtItemName" Background="#313244" Foreground="#CDD6F4" 
+                         FontSize="15" Padding="6" Margin="0,5" BorderThickness="1" BorderBrush="#45475A"/>
+
+                <!-- الوحدة -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="الوحدة:" Foreground="#CDD6F4" FontSize="15" VerticalAlignment="Center" Margin="0,5"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbUnit" Background="#313244" Foreground="Black" 
+                          FontSize="15" Padding="6" Margin="0,5" SelectedIndex="0">
+                    <ComboBoxItem Content="حبة"/>
+                    <ComboBoxItem Content="كرتون"/>
+                    <ComboBoxItem Content="كيلو"/>
+                    <ComboBoxItem Content="طقم"/>
+                </ComboBox>
+
+                <!-- الأسعار -->
+                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="سعر التكلفة:" Foreground="#CDD6F4" FontSize="15" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="txtCostPrice" Text="0.00" Background="#313244" Foreground="#FAB387" 
+                             FontSize="15" Padding="6" Margin="0,0,10,0" BorderThickness="1" BorderBrush="#45475A" GotFocus="PriceTextBox_GotFocus"/>
+
+                    <TextBlock Grid.Column="2" Text="سعر البيع:" Foreground="#CDD6F4" FontSize="15" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox Grid.Column="3" x:Name="txtUnitPrice" Text="0.00" Background="#313244" Foreground="#A6E3A1" 
+                             FontSize="15" Padding="6" BorderThickness="1" BorderBrush="#89B4FA" GotFocus="PriceTextBox_GotFocus"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- 3. أزرار العمليات -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10">
+            <Button x:Name="btnSave" Content="💾 حفظ جديد" Background="#A6E3A1" Foreground="#11111B" 
+                    FontSize="15" FontWeight="Bold" Width="130" Height="40" Margin="0,0,8,0" Click="btnSave_Click"/>
+            <Button x:Name="btnUpdate" Content="✏️ تعديل" Background="#89B4FA" Foreground="#11111B" 
+                    FontSize="15" FontWeight="Bold" Width="110" Height="40" Margin="0,0,8,0" Click="btnUpdate_Click"/>
+            <Button x:Name="btnDelete" Content="🗑️ حذف" Background="#F38BA8" Foreground="#11111B" 
+                    FontSize="15" FontWeight="Bold" Width="110" Height="40" Margin="0,0,8,0" Click="btnDelete_Click"/>
+            <Button x:Name="btnClear" Content="🔄 تفريغ الحقول" Background="#313244" Foreground="#CDD6F4" 
+                    FontSize="15" Width="130" Height="40" Click="btnClear_Click"/>
+        </StackPanel>
+
+        <!-- 4. شريط البحث والجدول -->
+        <Grid Grid.Row="3" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- شريط البحث -->
+            <DockPanel Grid.Row="0" Margin="0,0,0,10">
+                <TextBlock Text="🔍 بحث سريع (بالاسم أو الباركود):" Foreground="#CDD6F4" FontSize="14" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtSearch" Background="#313244" Foreground="#CDD6F4" FontSize="14" Padding="6" 
+                         BorderBrush="#45475A" TextChanged="txtSearch_TextChanged"/>
+            </DockPanel>
+
+            <!-- جدول عرض الأصناف -->
+            <DataGrid x:Name="dgItems" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" 
+                      SelectionMode="Single" HeadersVisibility="Column" Background="#1E1E2E" RowBackground="#181825"
+                      AlternatingRowBackground="#1E1E2E" Foreground="#CDD6F4" BorderBrush="#45475A" GridLinesVisibility="Horizontal"
+                      SelectionChanged="dgItems_SelectionChanged">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#313244"/>
+                        <Setter Property="Foreground" Value="#CDD6F4"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Height" Value="35"/>
+                        <Setter Property="Padding" Value="10,0"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Height" Value="32"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="الرقم" Binding="{Binding ItemID}" Width="70"/>
+                    <DataGridTextColumn Header="الباركود" Binding="{Binding Barcode}" Width="150"/>
+                    <DataGridTextColumn Header="اسم الصنف" Binding="{Binding ItemName}" Width="*"/>
+                    <DataGridTextColumn Header="الوحدة" Binding="{Binding UnitName}" Width="100"/>
+                    <DataGridTextColumn Header="سعر التكلفة" Binding="{Binding CostPrice, StringFormat=N2}" Width="110"/>
+                    <DataGridTextColumn Header="سعر البيع" Binding="{Binding UnitPrice, StringFormat=N2}" Width="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

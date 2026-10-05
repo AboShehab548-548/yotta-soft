@@ -1,0 +1,110 @@
+﻿<Window x:Class="accounting_project.ChartOfAccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="النظام المالي - الحسابات - الدليل المحاسبي" Height="700" Width="1000"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار الشاشة -->
+        <Border Grid.Row="0" Background="#EFEFEF" Padding="8" Margin="0,0,0,10" BorderBrush="#DDD" BorderThickness="1">
+            <TextBlock Text="الحسابات ◄ التهيئة ◄ الدليل المحاسبي" FontWeight="Bold" Foreground="#333"/>
+        </Border>
+
+        <!-- المحتوى الرئيسي: مقسم إلى شجرة الحسابات يميناً وتفاصيل الحساب يساراً -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- شجرة الحسابات مع مربع البحث -->
+            <Border Grid.Column="0" BorderBrush="#CCC" BorderThickness="1" Background="#FAFAFA" Padding="5">
+                <DockPanel>
+                    <TextBlock Text="شجرة الحسابات" FontWeight="Bold" DockPanel.Dock="Top" Margin="5" Foreground="#2C3E50"/>
+                    
+                    <!-- مربع البحث الفوري -->
+                    <TextBox x:Name="txtSearchAccount" DockPanel.Dock="Top" Height="26" Margin="5,0,5,5" 
+                             TextChanged="TxtSearchAccount_TextChanged" VerticalContentAlignment="Center" 
+                             ToolTip="ابحث برقم أو اسم الحساب..."/>
+
+                    <TreeView x:Name="tvAccounts" SelectedItemChanged="TvAccounts_SelectedItemChanged"/>
+                </DockPanel>
+            </Border>
+
+            <!-- حقول تفاصيل الحساب -->
+            <Border Grid.Column="2" BorderBrush="#CCC" BorderThickness="1" Background="White" Padding="15">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="رقم الحساب:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtAccountCode" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="الحساب الأب:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtParentCode" Width="180" Height="26" IsReadOnly="True" Background="#EEE" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="اسم الحساب (عربي):" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtAccountNameAr" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="اسم الحساب (أجنبي):" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtAccountNameEn" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="نوع الحساب:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbAccountType" Width="180" Height="26"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="نوع التقرير:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbReportType" Width="180" Height="26"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="طبيعة الحساب:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbAccountNature" Width="180" Height="26"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="مجموعة الحساب:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbAccountGroup" Width="180" Height="26"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="العملة:" Width="110" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbCurrency" Width="180" Height="26"/>
+                            </StackPanel>
+                            <CheckBox x:Name="chkIsSub" Content="حساب فرعي (يتأثر بالعمليات)" FontWeight="Bold" VerticalAlignment="Center" Margin="110,5,0,0"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- الأزرار السفلية -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="استيراد من إكسل" Width="120" Height="32" Background="#2980B9" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnOpenImport_Click"/>
+            <Button Content="حساب جديد" Width="100" Height="32" Margin="5,0,0,0" Click="BtnNew_Click"/>
+            <Button Content="حفظ الحساب" Width="110" Height="32" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnSave_Click"/>
+            <Button Content="حذف" Width="80" Height="32" Background="#C0392B" Foreground="White" Margin="5,0,0,0" Click="BtnDelete_Click"/>
+            <Button Content="إغلاق" Width="80" Height="32" Margin="5,0,0,0" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

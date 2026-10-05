@@ -1,0 +1,61 @@
+﻿<Window x:Class="accounting_project.AccountLookupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="دليل الحسابات - البحث السريع (F9)" Height="450" Width="600"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI, Tahoma" FontSize="13" Background="#F8FAFC"
+        KeyDown="Window_KeyDown">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <!-- 1. شريط البحث والفلترة -->
+            <RowDefinition Height="Auto"/>
+            <!-- 2. جدول نتائج الحسابات -->
+            <RowDefinition Height="*"/>
+            <!-- 3. أزرار التحكم السفلي -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. شريط البحث -->
+        <Border Grid.Row="0" Background="#FFFFFF" Padding="10" CornerRadius="6" BorderBrush="#E2E8F0" BorderThickness="1" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="بحث (رقم/اسم الحساب):" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#334155" Margin="0,0,10,0"/>
+                <TextBox x:Name="TxtSearch" Grid.Column="1" Height="30" VerticalContentAlignment="Center" Padding="6,0"
+                         TextChanged="TxtSearch_TextChanged" KeyDown="TxtSearch_KeyDown" BorderBrush="#CBD5E1"/>
+            </Grid>
+        </Border>
+
+        <!-- 2. جدول عرض الحسابات الفرعية -->
+        <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="6" BorderBrush="#E2E8F0" BorderThickness="1" Margin="0,0,0,10">
+            <DataGrid x:Name="DgAccounts" AutoGenerateColumns="False" IsReadOnly="True"
+                      SelectionMode="Single" RowHeight="28" ColumnHeaderHeight="30"
+                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E2E8F0"
+                      MouseDoubleClick="DgAccounts_MouseDoubleClick" KeyDown="DgAccounts_KeyDown">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#0F172A"/>
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="رقم الحساب" Binding="{Binding AccountCode}" Width="140"/>
+                    <DataGridTextColumn Header="اسم الحساب" Binding="{Binding AccountNameAr}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- 3. أزرار الإجراءات -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Content="اختيار (Enter)" Width="110" Height="32" Background="#0F172A" Foreground="White" 
+                    FontWeight="Bold" Margin="0,0,8,0" Click="BtnSelect_Click"/>
+            <Button Content="إلغاء (Esc)" Width="90" Height="32" Background="#FFFFFF" Foreground="#334155" 
+                    BorderBrush="#CBD5E1" Click="BtnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

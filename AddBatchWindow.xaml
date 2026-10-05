@@ -1,0 +1,31 @@
+﻿<Window x:Class="accounting_project.AddBatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="إضافة صنف ودفعة جديدة" Height="460" Width="420"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="اسم الصنف:" Margin="0,5,0,2"/>
+            <TextBox x:Name="txtItemName" Height="30" Padding="5"/>
+
+            <TextBlock Text="الباركود:" Margin="0,5,0,2"/>
+            <TextBox x:Name="txtBarcode" Height="30" Padding="5"/>
+
+            <TextBlock Text="رقم الدفعة (Batch Number):" Margin="0,5,0,2"/>
+            <TextBox x:Name="txtBatchNumber" Height="30" Padding="5"/>
+
+            <TextBlock Text="الكمية:" Margin="0,5,0,2"/>
+            <TextBox x:Name="txtQuantity" Height="30" Padding="5" Text="10"/>
+
+            <TextBlock Text="سعر التكلفة:" Margin="0,5,0,2"/>
+            <TextBox x:Name="txtCostPrice" Height="30" Padding="5"/>
+
+            <TextBlock Text="تاريخ الانتهاء:" Margin="0,5,0,2"/>
+            <DatePicker x:Name="dpExpiryDate" Height="30"/>
+
+            <Button Content="حفظ البيانات" Height="38" Margin="0,15,0,0" 
+                    Background="#007ACC" Foreground="White" FontWeight="Bold" 
+                    Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

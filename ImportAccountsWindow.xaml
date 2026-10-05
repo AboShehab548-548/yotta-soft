@@ -1,0 +1,45 @@
+﻿<Window x:Class="accounting_project.ImportAccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="استيراد الدليل المحاسبي من ملف إكسل" Height="620" Width="950" FlowDirection="RightToLeft">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار برنامج إكسل -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="مسار برنامج الإكسل:" VerticalAlignment="Center" Width="130" FontWeight="Bold"/>
+            <TextBox x:Name="txtExcelPath" Width="600" Margin="5,0" Text="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" VerticalContentAlignment="Center"/>
+            <Button Content="..." Width="40" Click="BtnBrowseExcelApp_Click"/>
+        </StackPanel>
+
+        <!-- أزرار الاستيراد واختيار الملف -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+            <Button x:Name="btnSelectFile" Content="اختيار ملف الدليل (Excel)" Width="170" Height="35" Click="BtnSelectFile_Click"/>
+            <TextBox x:Name="txtFilePath" Width="430" Margin="10,0,0,0" IsReadOnly="True" VerticalContentAlignment="Center" Background="#FFF5F5F5"/>
+            <Button x:Name="btnImport" Content="استيراد من ملف إكسل" Width="160" Height="35" Margin="10,0,0,0" Background="#FF007ACC" Foreground="White" FontWeight="Bold" Click="BtnImport_Click"/>
+        </StackPanel>
+
+        <!-- تعليمات وترتيب الأعمدة -->
+        <GroupBox Grid.Row="2" Header="تعليمات وترتيب الأعمدة في ملف إكسل" Margin="0,0,0,10" Padding="10">
+            <StackPanel>
+                <TextBlock Text="ترتيب الأعمدة المطلوب في إكسل (يبدأ من السطر الثاني):" FontWeight="Bold" Foreground="DarkRed" Margin="0,0,0,5"/>
+                <TextBlock Text="رقم الحساب - العملة - اسم الحساب - الاسم الأجنبي - الحساب الرئيسي - المستوى - النوع - نوع التقرير - المجموعة - طبيعة الحساب - نوع الحساب - تحليل الحساب" TextWrapping="Wrap" Margin="0,0,0,5" FontSize="12"/>
+                <TextBlock Text="ملاحظة: تأكد من تهيئة أنواع الحسابات والتقارير في النظام مسبقاً، وإغلاق برنامج إكسل أثناء الاستيراد." FontSize="11" Foreground="Gray"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- معاينة البيانات -->
+        <DataGrid x:Name="dgPreview" Grid.Row="3" AutoGenerateColumns="True" CanUserAddRows="False" Margin="0,0,0,10"/>
+
+        <!-- زر الإغلاق -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Content="إغلاق" Width="100" Height="30" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

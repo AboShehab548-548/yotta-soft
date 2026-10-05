@@ -1,0 +1,169 @@
+﻿<Window x:Class="accounting_project.BranchesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="تهيئة النظام - التهيئة - بيانات الفروع" Height="680" Width="950"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار الشاشة -->
+        <Border Grid.Row="0" Background="#EFEFEF" Padding="8" Margin="0,0,0,10" BorderBrush="#DDD" BorderThickness="1">
+            <TextBlock Text="تهيئة النظام ◄ التهيئة ◄ بيانات الفروع" FontWeight="Bold" Foreground="#333"/>
+        </Border>
+
+        <!-- القسم العلوي: البيانات الأساسية للفرع والشركة -->
+        <Border Grid.Row="1" BorderBrush="#CCC" BorderThickness="1" Background="#FDFDFD" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- الشعار الجانبي -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <Border BorderBrush="#BBB" BorderThickness="1" Background="White" Height="140">
+                        <Image x:Name="imgLogo" Stretch="Uniform"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- الحقول الأساسية -->
+                <StackPanel Grid.Column="2">
+                    <UniformGrid Columns="2" Margin="0,3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="رقم الشركة:" FontWeight="Bold" VerticalAlignment="Center" Width="90"/>
+                            <ComboBox x:Name="cmbCompany" Width="200" Height="26"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="رقم الفرع:" FontWeight="Bold" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtBranchID" Width="150" Height="26" IsReadOnly="True" Background="#EEE" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </UniformGrid>
+
+                    <UniformGrid Columns="2" Margin="0,3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="اسم الفرع:" FontWeight="Bold" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtBranchName" Width="200" Height="26" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="السنة:" FontWeight="Bold" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtYear" Width="150" Height="26" Text="2026" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </UniformGrid>
+
+                    <UniformGrid Columns="2" Margin="0,3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="الاسم الأجنبي:" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtForeignName" Width="200" Height="26" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <CheckBox x:Name="chkIsMain" Content="رئيسي" FontWeight="Bold" VerticalAlignment="Center" Margin="90,0,0,0"/>
+                    </UniformGrid>
+
+                    <UniformGrid Columns="2" Margin="0,3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="المركز الرئيسي:" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtParentBranch" Width="200" Height="26" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="رقم المجموعة:" VerticalAlignment="Center" Width="90"/>
+                            <TextBox x:Name="txtGroupID" Width="150" Height="26" Text="1" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- التبويبات (Tabs) لتنظيم بقية البيانات -->
+        <TabControl Grid.Row="2" Margin="0,0,0,10">
+            <!-- تبويب بيانات الفرع والعنوان -->
+            <TabItem Header="بيانات الفرع والعنوان">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- العمود الأيمن -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="عنوان الفرع:" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtAddress" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="رقم الهاتف (Tel No):" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtTeleNo" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="رقم الفاكس (Fax No):" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtFaxNo" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="صندوق البريد (P.O.Box):" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtPOBox" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="الرقم الضريبي:" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtTaxNumber" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- العمود الأيسر (الجغرافي والضرائب) -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="خط العرض (Latitude):" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtLatitude" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="خط الطول (Longitude):" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtLongitude" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="المدينة / المنطقة:" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtCity" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="رقم السجل التجاري:" FontWeight="Bold" Margin="0,3"/>
+                            <TextBox x:Name="txtCommercialRegister" Height="26" Margin="0,0,0,8" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- تبويب ترويسة التقارير -->
+            <TabItem Header="ترويسة التقارير">
+                <StackPanel Margin="15">
+                    <TextBlock Text="النص الأول للترويسة:" FontWeight="Bold" Margin="0,3"/>
+                    <TextBox x:Name="txtHeader1" Height="28" Margin="0,0,0,10" VerticalContentAlignment="Center"/>
+
+                    <TextBlock Text="النص الثاني للترويسة:" FontWeight="Bold" Margin="0,3"/>
+                    <TextBox x:Name="txtHeader2" Height="28" Margin="0,0,0,10" VerticalContentAlignment="Center"/>
+
+                    <TextBlock Text="النص الثالث للترويسة:" FontWeight="Bold" Margin="0,3"/>
+                    <TextBox x:Name="txtHeader3" Height="28" Margin="0,0,0,10" VerticalContentAlignment="Center"/>
+
+                    <TextBlock Text="المواصفات / ملاحظات الترويسة:" FontWeight="Bold" Margin="0,3"/>
+                    <TextBox x:Name="txtSpecifications" Height="50" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="الموقع الإلكتروني (Website):" FontWeight="Bold" Margin="0,3"/>
+                    <TextBox x:Name="txtWebsite" Height="28" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- تبويب أرشفة الوثائق -->
+            <TabItem Header="أرشفة الوثائق">
+                <TextBlock Text="هنا يتم إدارة المستندات والوثائق المؤرشفة الخاصة بالفرع." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" FontSize="14"/>
+            </TabItem>
+
+            <!-- تبويب المخازن والمعرفات -->
+            <TabItem Header="المخازن والمعرفات">
+                <TextBlock Text="هنا يتم ربط المخازن ومراكز التكلفة الافتراضية بالفرع." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" FontSize="14"/>
+            </TabItem>
+        </TabControl>
+
+        <!-- الأزرار السفلية -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="بحث / القائمة" Width="100" Height="30" Margin="5,0,0,0" Click="BtnSearch_Click"/>
+            <Button Content="جديد / إضافة" Width="100" Height="30" Margin="5,0,0,0" Click="BtnNew_Click"/>
+            <Button Content="حفظ البيانات" Width="110" Height="30" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnSave_Click"/>
+            <Button Content="إغلاق" Width="80" Height="30" Margin="5,0,0,0" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

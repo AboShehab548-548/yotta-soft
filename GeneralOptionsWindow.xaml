@@ -1,0 +1,71 @@
+﻿<Window x:Class="accounting_project.GeneralOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="تهيئة النظام - التهيئة - المتغيرات العامة" Height="600" Width="850"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار الشاشة -->
+        <Border Grid.Row="0" Background="#EFEFEF" Padding="8" Margin="0,0,0,15" BorderBrush="#DDD" BorderThickness="1">
+            <TextBlock Text="تهيئة النظام ◄ التهيئة ◄ المتغيرات العامة" FontWeight="Bold" Foreground="#333"/>
+        </Border>
+
+        <!-- محتوى الخيارات (تابات أو تقسيمات واضحة) -->
+        <TabControl Grid.Row="1">
+            <TabItem Header="البيانات الرئيسية" FontWeight="Bold">
+                <StackPanel Margin="10">
+
+                    <!-- رتبة الحساب الفرعي -->
+                    <UniformGrid Columns="2" Margin="0,5" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="رتبة الحساب الفرعي:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBox x:Name="txtSubAccountRank" Height="28" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- استخدام العملات الأجنبية -->
+                    <UniformGrid Columns="2" Margin="0,8" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="استخدام العملات الأجنبية:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <CheckBox x:Name="chkUseForeignCurrencies" VerticalAlignment="Center" Content="مفعل (السماح بتعدد العملات)"/>
+                    </UniformGrid>
+
+                    <!-- تسلسل الحسابات المدينة والدائنة الأخرى -->
+                    <UniformGrid Columns="2" Margin="0,5" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="تسلسل الحسابات المدينة والدائنة الأخرى:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <ComboBox x:Name="cmbDebitCreditSequence" Height="28">
+                            <ComboBoxItem Content="1 - حسب المجموعة"/>
+                            <ComboBoxItem Content="2 - حسب النوع"/>
+                        </ComboBox>
+                    </UniformGrid>
+
+                    <!-- طريقة عرض اسم الموظف / اللقب -->
+                    <UniformGrid Columns="2" Margin="0,15" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="اللقب في بداية اسم الموظف:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <CheckBox x:Name="chkEmpTitleAtStart" VerticalAlignment="Center" Content="تفعيل (اللقب ثم الاسم)"/>
+                    </UniformGrid>
+
+                    <!-- حدود أرقام الموظفين -->
+                    <UniformGrid Columns="2" Margin="0,5" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="الحد الأدنى لرقم الموظف:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtMinEmpID" Height="28" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+                    <UniformGrid Columns="2" Margin="0,5" MaxWidth="500" HorizontalAlignment="Right">
+                        <TextBlock Text="الحد الأعلى لرقم الموظف:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtMaxEmpID" Height="28" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <!-- الأزرار السفلية -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="حفظ المتغيرات" Width="110" Height="32" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnSave_Click"/>
+            <Button Content="إغلاق" Width="90" Height="32" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

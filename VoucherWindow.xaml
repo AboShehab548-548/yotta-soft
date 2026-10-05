@@ -1,0 +1,147 @@
+﻿<Window x:Class="accounting_project.VoucherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:accounting_project.ViewModels"
+        Title="إدخال السندات - أنظمة الأونكس المحاسبية" Height="720" Width="980"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen"
+        Background="#F1F5F9" FontFamily="Segoe UI">
+
+    <Window.DataContext>
+        <vm:VoucherViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <!-- 1. الشريط العلوي أونكس -->
+            <RowDefinition Height="48"/>
+            <!-- 2. شريط الأزرار الثابت -->
+            <RowDefinition Height="*"/>
+            <!-- 3. المحتوى الرئيسي -->
+            <RowDefinition Height="28"/>
+            <!-- 4. شريط الحالة -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. الشريط العلوي (Onyx Header Style) -->
+        <Border Grid.Row="0" Background="#0F172A">
+            <Grid Margin="12,0">
+                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Title}" 
+                           Foreground="White" FontWeight="Bold" FontSize="13" VerticalAlignment="Center"/>
+                <TextBlock Text="Onyx Pro ERP - الإصدار المطور" Foreground="#64748B" FontSize="11" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- 2. شريط الأدوات الثابت (ToolBar) -->
+        <Border Grid.Row="1" Background="White" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1" Padding="10,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Content="جديد (F2)" Width="80" Height="30" Margin="0,0,4,0" Background="#2563EB" Foreground="White" FontWeight="Bold" Cursor="Hand"/>
+                <Button Content="حفظ (F10)" Width="80" Height="30" Margin="0,0,4,0" Background="#16A34A" Foreground="White" FontWeight="Bold" Command="{Binding SaveCommand}" Cursor="Hand"/>
+                <Button Content="تعديل" Width="75" Height="30" Margin="0,0,4,0" Background="#D97706" Foreground="White" FontWeight="Bold" Cursor="Hand"/>
+                <Button Content="حذف" Width="75" Height="30" Margin="0,0,4,0" Background="#DC2626" Foreground="White" FontWeight="Bold" Cursor="Hand"/>
+                <Button Content="استعراض" Width="80" Height="30" Margin="0,0,15,0" Background="#475569" Foreground="White" FontWeight="Bold" Command="{Binding OpenVoucherListCommand}" Cursor="Hand"/>
+                <Button Content="طباعة" Width="75" Height="30" Margin="0,0,4,0" Background="#0E7490" Foreground="White" FontWeight="Bold" Command="{Binding PrintCommand}" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 3. المحتوى الرئيسي (بيانات السند والجدول) -->
+        <Grid Grid.Row="2" Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- بيانات رأس السند -->
+            <GroupBox Header="بيانات السند الأساسية" Grid.Row="0" Margin="0,0,0,8" Padding="8">
+                <WrapPanel>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="رقم السند:"/>
+                        <TextBox Text="{Binding VoucherNo, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="25"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="تاريخ السند:"/>
+                        <DatePicker SelectedDate="{Binding VoucherDate}" Width="150" Height="25"/>
+                    </StackPanel>
+
+                    <!-- حساب الخزينة مع زر البحث -->
+                    <StackPanel Margin="5">
+                        <TextBlock Text="حساب الخزينة:"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding TreasuryAccountCode, UpdateSourceTrigger=PropertyChanged}" Width="110" Height="25"/>
+                            <Button Content="🔍" Command="{Binding SearchTreasuryAccountCommand}" Width="35" Height="25" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding TreasuryAccountName}" Foreground="DarkGreen" FontWeight="Bold" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </WrapPanel>
+            </GroupBox>
+
+            <!-- جدول التفاصيل -->
+            <DockPanel Grid.Row="1" Margin="0,0,0,8">
+                <Button Content="+ إضافة سطر" Command="{Binding AddRowCommand}" DockPanel.Dock="Top" 
+                        Width="100" HorizontalAlignment="Right" Margin="0,0,0,5" Height="25" Background="#2563EB" Foreground="White"/>
+
+                <DataGrid ItemsSource="{Binding Details}" AutoGenerateColumns="False" CanUserAddRows="False" Background="White">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Binding="{Binding VoucherLineNo}" IsReadOnly="True" Width="40"/>
+
+                        <DataGridTemplateColumn Header="الحساب" Width="260">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding AccountID, UpdateSourceTrigger=PropertyChanged}" Height="24"/>
+                                        <Button Grid.Column="1" Content="🔍" 
+                                                Command="{Binding DataContext.SearchDetailAccountCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}" Height="24"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding AccountName}" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="DarkBlue" FontWeight="SemiBold"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="المبلغ" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                        <DataGridTextColumn Header="المبلغ المحلي" Binding="{Binding LocalAmount, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                        <DataGridTextColumn Header="البيان" Binding="{Binding Notes}" Width="*"/>
+
+                        <DataGridTemplateColumn Width="70">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="حذف" Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                                            CommandParameter="{Binding}" Foreground="Red"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+            <!-- الملاحظات والإجمالي -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="220"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Notes}" Height="45" AcceptsReturn="True" Margin="0,0,10,0" ToolTip="ملاحظات السند العام"/>
+
+                <Border Grid.Column="1" VerticalAlignment="Center" Background="#E2E8F0" Padding="8">
+                    <StackPanel>
+                        <TextBlock Text="الإجمالي العام:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding TotalAmount, StringFormat={}{0:N2}}" FontSize="16" Foreground="Green" FontWeight="Bold"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- 4. شريط الحالة السفلي (Status Bar) -->
+        <Border Grid.Row="3" Background="#1E293B">
+            <Grid Margin="12,0">
+                <TextBlock Text="جاهز للعمل - قاعدة البيانات متصلة بنجاح" Foreground="#94A3B8" VerticalAlignment="Center" FontSize="11"/>
+                <TextBlock Text="المستخدم: النظام" Foreground="#94A3B8" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="11"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

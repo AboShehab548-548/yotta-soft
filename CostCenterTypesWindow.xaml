@@ -1,0 +1,126 @@
+﻿<Window x:Class="accounting_project.CostCentersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="النظام المالي - التهيئة - مراكز التكلفة" Height="700" Width="1000"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار الشاشة -->
+        <Border Grid.Row="0" Background="#EFEFEF" Padding="8" Margin="0,0,0,10" BorderBrush="#DDD" BorderThickness="1">
+            <TextBlock Text="تهيئة النظام ◄ الإدخالات ◄ مراكز التكلفة" FontWeight="Bold" Foreground="#333"/>
+        </Border>
+
+        <!-- المحتوى الرئيسي: شجرة مراكز التكلفة يميناً والتفاصيل يساراً -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- شجرة مراكز التكلفة مع مربع البحث -->
+            <Border Grid.Column="0" BorderBrush="#CCC" BorderThickness="1" Background="#FAFAFA" Padding="5">
+                <DockPanel>
+                    <TextBlock Text="شجرة مراكز التكلفة" FontWeight="Bold" DockPanel.Dock="Top" Margin="5" Foreground="#2C3E50"/>
+
+                    <!-- مربع البحث الفوري -->
+                    <TextBox x:Name="txtSearchCostCenter" DockPanel.Dock="Top" Height="26" Margin="5,0,5,5" 
+                             TextChanged="TxtSearchCostCenter_TextChanged" VerticalContentAlignment="Center" 
+                             ToolTip="ابحث برقم أو اسم مركز التكلفة..."/>
+
+                    <TreeView x:Name="tvCostCenters" SelectedItemChanged="TvCostCenters_SelectedItemChanged"/>
+                </DockPanel>
+            </Border>
+
+            <!-- حقول تفاصيل مركز التكلفة -->
+            <Border Grid.Column="2" BorderBrush="#CCC" BorderThickness="1" Background="White" Padding="15">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- رقم المركز والمركز الرئيسي -->
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="رقم مركز التكلفة:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtCenterCode" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="المركز الرئيسي:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtParentCode" Width="180" Height="26" IsReadOnly="True" Background="#EEE" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <!-- اسم المركز (عربي وأجنبي) -->
+                        <UniformGrid Columns="2" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="اسم المركز (عربي):" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtCenterNameAr" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="الاسم الأجنبي:" Width="110" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtCenterNameEn" Width="180" Height="26" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <Separator Margin="0,10"/>
+
+                        <!-- تبويبات أو تفاصيل إضافية مشابهة للصورة -->
+                        <TabControl Height="280">
+                            <TabItem Header="مركز التكلفة" FontWeight="Bold">
+                                <StackPanel Margin="10">
+                                    <UniformGrid Columns="2" Margin="0,5">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="الرتبة:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                            <TextBox x:Name="txtRank" Width="180" Height="26" VerticalContentAlignment="Center" Text="1"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="النوع (فرعي/رئيسي):" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                            <ComboBox x:Name="cmbCenterType" Width="180" Height="26"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+
+                                    <UniformGrid Columns="1" Margin="0,5">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="مجموعة مراكز التكلفة:" FontWeight="Bold" Width="110" VerticalAlignment="Center"/>
+                                            <ComboBox x:Name="cmbCenterGroup" Width="180" Height="26"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+
+                                    <Separator Margin="0,10"/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <CheckBox x:Name="chkStopTransactions" Content="توقيف العمليات" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <UniformGrid Columns="2" Margin="0,5">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="تاريخ التوقيف:" Width="110" VerticalAlignment="Center"/>
+                                            <TextBox x:Name="txtStopDate" Width="180" Height="26" IsReadOnly="True" Background="#EEE" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="سبب التوقيف:" Width="110" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="txtStopReason" Width="470" Height="26" VerticalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- الأزرار السفلية -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="مركز جديد" Width="100" Height="32" Margin="5,0,0,0" Click="BtnNew_Click"/>
+            <Button Content="حفظ المركز" Width="110" Height="32" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnSave_Click"/>
+            <Button Content="حذف" Width="80" Height="32" Background="#C0392B" Foreground="White" Margin="5,0,0,0" Click="BtnDelete_Click"/>
+            <Button Content="إغلاق" Width="80" Height="32" Margin="5,0,0,0" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

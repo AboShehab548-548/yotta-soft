@@ -1,0 +1,134 @@
+﻿<Window x:Class="accounting_project.CountriesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="تهيئة النظام - التهيئة - بيانات الدول" Height="600" Width="850"
+        FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- مسار الشاشة -->
+        <Border Grid.Row="0" Background="#EFEFEF" Padding="8" Margin="0,0,0,15" BorderBrush="#DDD" BorderThickness="1">
+            <TextBlock Text="تهيئة النظام ◄ التهيئة ◄ بيانات الدول" FontWeight="Bold" Foreground="#333"/>
+        </Border>
+
+        <!-- محتوى الحقول الأساسية للدولة -->
+        <Border Grid.Row="1" BorderBrush="#CCC" BorderThickness="1" Background="#FDFDFD" Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- العمود الأيمن -->
+                <StackPanel Grid.Column="0">
+                    <!-- رقم الدولة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="رقم الدولة:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBox x:Name="txtCountryID" Height="26" VerticalContentAlignment="Center" IsReadOnly="True" Background="#EEE"/>
+                    </UniformGrid>
+
+                    <!-- اسم الدولة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="اسم الدولة:" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBox x:Name="txtCountryName" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- الاسم الأجنبي -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="الاسم الأجنبي:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtForeignName" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- العملة المحلية -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="العملة المحلية:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtLocalCurrency" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- رقم الإقليم -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="رقم الإقليم:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtRegionID" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- الاسم الأجنبي (الإقليم/أخرى) -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="الاسم الأجنبي:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtSubForeign" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- الاسم المختصر أجنبي -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="الاسم المختصر أجنبي:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtForeignShort" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- كود الدولة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="كود الدولة:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtCountryCode" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+                </StackPanel>
+
+                <!-- العمود الأيسر -->
+                <StackPanel Grid.Column="2">
+                    <!-- مختصراسم الدولة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="مختصر اسم الدولة:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtCountryShortName" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- القارة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="القارة:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtContinent" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- الجنسية -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="الجنسية:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtNationality" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- الاسم المختصر -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="الاسم المختصر:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtShortName" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- المفتاح -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="المفتاح:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtPhoneKey" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- اللغة -->
+                    <UniformGrid Columns="2" Margin="0,5">
+                        <TextBlock Text="اللغة:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtLanguage" Height="26" VerticalContentAlignment="Center"/>
+                    </UniformGrid>
+
+                    <!-- حظر التعامل -->
+                    <UniformGrid Columns="2" Margin="0,15">
+                        <TextBlock Text=""/>
+                        <CheckBox x:Name="chkBlockDealing" Content="حظر التعامل" VerticalAlignment="Center" FontWeight="Bold" Foreground="Red"/>
+                    </UniformGrid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- الأزرار السفلية (إضافة، تعديل، حفظ، بحث، إغلاق) -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="بحث / استعراض القائمة" Width="130" Height="32" Margin="5,0,0,0" Click="BtnSearch_Click"/>
+            <Button Content="جديد / إضافة" Width="100" Height="32" Margin="5,0,0,0" Click="BtnNew_Click"/>
+            <Button Content="حفظ" Width="90" Height="32" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="5,0,0,0" Click="BtnSave_Click"/>
+            <Button Content="إغلاق" Width="80" Height="32" Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
